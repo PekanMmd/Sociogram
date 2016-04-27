@@ -1,0 +1,83 @@
+/* 
+  localisableStrings.strings
+  Sociogram
+
+  Created by The Steez on 26/03/2016.
+  Copyright © 2016 UCL. All rights reserved.
+*/
+
+/*----------------------------
+ * General Strings
+ *----------------------------
+ */
+
+"AppName"			= "Sociogram";
+
+"Login"				= "Log in";
+"Signup"			= "Sign up";
+"Username"			= "Username";
+"Password"			= "Password";
+"OK"				= "OK";
+"Cancel"			= "Cancel";
+"Settings"			= "Settings";
+"Edit"				= "Edit";
+"Follow"			= "Follow";
+"Unfollow"			= "Unfollow";
+"See_All"			= "See All";
+"All"				= "All";
+"States"			= "States";
+"Traits"			= "Traits";
+"Comments"			= "Comments";
+"Features"			= "Features";
+"Agree"				= "Agree";
+"Disagree"			= "Disagree";
+"Add"				= "Add";
+
+
+/*----------------------------
+ * Profile Strings
+ *----------------------------
+ */
+"Profile"			= "Profile";
+"Age"				= "Age";
+"Gender"			= "Gender";
+"Female"			= "Female";
+"Male"				= "Male";
+"Other"				= "Other";
+"Opinions"			= "Opinions";
+"PostComment"		= "Tap to post a new comment";
+"Post"				= "Post comment Anonymously";
+"NoFeatures"		= "There are no features to show";
+"Firstname"			= "First Name";
+"Lastname"			= "Last Name";
+"Email"				= "E-mail";
+"Password"			= "Password";
+"ConfirmPassword"	= "Confirm Password";
+"Contribute"		= "Contribute";
+"Public"			= "Public";
+"Private"			= "Private";
+
+
+/*----------------------------
+ * Search Strings
+ *----------------------------
+ */
+"Search"			= "Search";
+
+
+/*----------------------------
+ * Timeline Strings
+ *----------------------------
+ */
+"Timeline"			= "Time Line";
+
+
+/*----------------------------
+ * Settings Strings
+ *----------------------------
+ */
+"Settings"			= "Settings";
+"Logout"			= "Log out";
+
+
+
