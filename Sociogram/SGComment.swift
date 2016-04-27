@@ -26,10 +26,10 @@ class SGComment: NSObject {
 			self.date = SGDesign.dateFormatter().dateFromString(d as! String) ?? NSDate(timeIntervalSinceNow: 0)
 		}
 		self.recipient = (dictionaryRepresentation["recipient"] ?? "") as! String
-		let a = (dictionaryRepresentation["agree"] ?? "0") as! String
-		self.agree = Int(a) ?? 0
-		let d = (dictionaryRepresentation["disagree"] ?? "0") as! String
-		self.agree = Int(d) ?? 0
+		let a = (dictionaryRepresentation["agree"] ?? 0) as! Int
+		self.agree = a
+		let d = (dictionaryRepresentation["disagree"] ?? 0) as! Int
+		self.agree = d
 		self.isPrivate = (dictionaryRepresentation["is_private"] ?? true) as! Bool
 		self.id = (dictionaryRepresentation["id"] ?? 0) as! Int
 		

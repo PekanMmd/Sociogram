@@ -57,6 +57,7 @@ class SGUser: NSObject, SGObject {
 		}
 		
 		
+		
 	}
 	
 	func listFeaturesByDescendingScores() -> [SGFeature] {
@@ -76,23 +77,23 @@ class SGUser: NSObject, SGObject {
 	class func dummyUser1() -> SGUser {
 		
 		let att1 = ["name" : "Honest", "mean" : "0.5", "sd" : "0.5"]
-		let att2 = ["name" : "Decent", "mean" : "0.5", "sd" : "0.5"]
+		let att2 = ["name" : "Funny", "mean" : "0.5", "sd" : "0.5"]
 		let att3 = ["name" : "Cool"  , "mean" : "0.0", "sd" : "0.0"]
 		
 		let f1 = ["attribute" : att1, "value" : 0.81, "contributors" : ["Stars", "Justin", "Bahador"]]
 		let f2 = ["attribute" : att2, "value" : 0.37, "contributors" : ["Stars", "Justin", "Bahador", "Arash"]]
 		let f3 = ["attribute" : att3, "value" : 0.55, "contributors" : ["Justin", "Arash"]]
 		
-		return SGUser(dictionaryRepresentation: ["name" : "Stars Momodu", "username" : "SteezySwag", "email" : "Steezy@gmail.com", "age" : 21, "gender" : "O", "features" : [ f1,f2,f3 ]])
+		return SGUser(dictionaryRepresentation: ["name" : "John Doe", "username" : "Jo_Jo_Doe", "email" : "Steezy@gmail.com", "age" : 21, "gender" : "O", "features" : [ f1,f2,f3 ]])
 	}
 	
 	class func dummyUser2() -> SGUser {
 		
 		
 		let att1 = ["name" : "Honest", "mean" : "0.5", "sd" : "0.5"]
-		let att2 = ["name" : "Decent", "mean" : "0.5", "sd" : "0.5"]
+		let att2 = ["name" : "Hard Working", "mean" : "0.5", "sd" : "0.5"]
 		let att3 = ["name" : "Brave" , "mean" : "0.0", "sd" : "0.0"]
-		let att4 = ["name" : "Rash"  , "mean" : "0.0", "sd" : "0.0"]
+		let att4 = ["name" : "Trustworthy"  , "mean" : "0.0", "sd" : "0.0"]
 		let att5 = ["name" : "Calm"  , "mean" : "0.0", "sd" : "0.0"]
 		
 		let f1 = ["attribute" : att1, "value" : 0.46, "contributors" : ["Stars", "Justin", "Bahador"]]
@@ -101,7 +102,7 @@ class SGUser: NSObject, SGObject {
 		let f4 = ["attribute" : att4, "value" : 0.58, "contributors" : ["Stars", "Justin", "Bahador", "Arash"]]
 		let f5 = ["attribute" : att5, "value" : 0.12, "contributors" : ["Stars", "Justin", "Bahador", "Arash"]]
 		
-		return SGUser(dictionaryRepresentation: ["name" : "Bahador Bahrami", "username" : "B_Bahrami", "email" : "b.bahrami@gmail.com", "age" : 27, "gender" : "F", "features" : [ f1,f2,f3,f4,f5 ]])
+		return SGUser(dictionaryRepresentation: ["name" : "Jane Doe", "username" : "Jazzy_D", "email" : "b.bahrami@gmail.com", "age" : 27, "gender" : "F", "features" : [ f1,f2,f3,f4,f5 ]])
 	}
 	
 	override func isEqual(object: AnyObject?) -> Bool {

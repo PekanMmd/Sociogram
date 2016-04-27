@@ -15,6 +15,7 @@ class SGTableViewCell: UITableViewCell {
 		
 		self.layer.cornerRadius = SGDesign.sizeCornerRadius()
 		self.clipsToBounds = true
+		
 	}
 
 	required init?(coder aDecoder: NSCoder) {

@@ -44,6 +44,7 @@ class SGSignupViewController: SGTableViewController, UITextFieldDelegate {
 	}
 	
 	func setupUI() {
+		
 		let photo = SGProfileImageView()
 		photo.layer.cornerRadius = 25
 		self.addSubview(photo, name: "p")

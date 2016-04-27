@@ -29,6 +29,7 @@ class SGTimelineViewController: SGTableViewController {
 	}
 	
 	func getTimeLine() {
+		
 		self.showActivityView { (done) in
 			SGAPI.getUserTimelineComments(username: currentUser.username) { (comments, error) in
 				if comments != nil {

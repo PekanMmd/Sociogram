@@ -26,9 +26,10 @@ class SGTableViewController: SGViewController, UITableViewDataSource, UITableVie
 	}
 	
 	func layoutUI() {
+		metrics["tabBarHeight"] = self.tabBarController?.tabBar.frame.height
 		self.addSubview(tableView, name: "table")
 		self.addConstraintsFormat(visualFormat: "H:|-(5)-[table]-(5)-|", layoutFormat: [])
-		self.addConstraintsFormat(visualFormat: "V:|[table]|", layoutFormat: [])
+		self.addConstraintsFormat(visualFormat: "V:|[table]-(tabBarHeight)-|", layoutFormat: [])
 	}
 	
 	// Data Source

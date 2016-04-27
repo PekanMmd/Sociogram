@@ -54,8 +54,9 @@ class SGSearchViewController: SGTableViewController, UITextFieldDelegate {
 		self.searchBar.autocapitalizationType = .None
 		self.addSubview(searchBar, name: "bar")
 		
+		metrics["tabBarHeight"] = self.tabBarController?.tabBar.frame.height
 		self.addSubview(tableView, name: "table")
-		self.addConstraintsFormat(visualFormat: "V:|-(10)-[bar(40)]-(20)-[table]-(5)-|", layoutFormat: [NSLayoutFormatOptions.AlignAllLeft, NSLayoutFormatOptions.AlignAllRight])
+		self.addConstraintsFormat(visualFormat: "V:|-(10)-[bar(40)]-(20)-[table]-(tabBarHeight)-|", layoutFormat: [NSLayoutFormatOptions.AlignAllLeft, NSLayoutFormatOptions.AlignAllRight])
 		self.addConstraintsFormat(visualFormat: "H:|-(5)-[table]-(5)-|", layoutFormat: [])
 		
 	}
@@ -81,8 +82,6 @@ class SGSearchViewController: SGTableViewController, UITextFieldDelegate {
 				self.clearSearch()
 				return
 			}
-			
-//			self.users = [SGUser.dummyUser1(), SGUser.dummyUser2()]
 			
 			SGAPI.getUserlistSearch(name: searchString!) { (response, e) in
 				self.hideActivityView()
@@ -112,7 +111,6 @@ class SGSearchViewController: SGTableViewController, UITextFieldDelegate {
 	func clearSearch() {
 		self.hideActivityView()
 		self.users = []
-//		self.users = [SGUser.dummyUser1(), SGUser.dummyUser2()]
 		self.updateUI()
 	}
 	

@@ -17,7 +17,9 @@ class SGNewFeatureViewController: SGTableViewController, UITextFieldDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		self.addButton = SGButton(title: localisedString("Contribute"), font: SGDesign.fontBoldOfSize(18), background: SGDesign.colourMainTheme(), textColour: SGDesign.colourWhite(), target: self, action: #selector(submit), rounded: false, image: nil)
+		self.title = localisedString("AddFeature")
+		
+		self.addButton = SGButton(title: localisedString("Add"), font: SGDesign.fontBoldOfSize(18), background: SGDesign.colourMainTheme(), textColour: SGDesign.colourWhite(), target: self, action: #selector(submit), rounded: false, image: nil)
 		self.addButton.backgroundColor = SGDesign.colourMainTheme()
 		self.addSubview(addButton, name: "a")
 		
@@ -27,6 +29,7 @@ class SGNewFeatureViewController: SGTableViewController, UITextFieldDelegate {
 		name.textColor = SGDesign.colourMainTheme()
 		name.layer.cornerRadius = SGDesign.sizeCornerRadius()
 		name.delegate = self
+		name.returnKeyType = .Done
 		self.addSubview(name, name: "n")
 		
 		metrics["tabBarHeight"] = self.tabBarController?.tabBar.frame.height
@@ -51,9 +54,17 @@ class SGNewFeatureViewController: SGTableViewController, UITextFieldDelegate {
 			return
 		}
 		self.showActivityView { (d) in
-//			SGAPI.
-			self.hideActivityView()
-			self.pop()
+			SGAPI.postNewFeature(feature: self.name.text!, forUser: currentUser.username, completion: { (success, error) in
+				if error != nil {
+					SGAlertView.show(message: "Please check your internet connection.")
+				} else if success {
+					self.pop()
+				} else {
+					SGAlertView.show(message: "Something went wrong.")
+				}
+				self.hideActivityView()
+			})
+			
 		}
 		
 	}

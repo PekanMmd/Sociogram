@@ -114,6 +114,24 @@ class SGAPI : NSObject {
 		}
 	}
 	
+	private class var addFeaturePath : String {
+		get {
+			return urlBasePath + "addcustomfeature"
+		}
+	}
+	
+	private class var getCustomFeaturesPath : String {
+		get {
+			return urlBasePath + "getcustomfeature"
+		}
+	}
+	
+	private class var getUserFeaturesPath : String {
+		get {
+			return urlBasePath + "getallfeatures"
+		}
+	}
+	
 	private class var headers : [String : String]? {
 		get {
 			return nil
@@ -162,11 +180,14 @@ class SGAPI : NSObject {
 				return
 			}
 			
-			print(response)
 			let dict = response.result.value as! [ [String: AnyObject] ]
-			let user = SGUser(dictionaryRepresentation: dict[0])
 			
-			completion(user, nil)
+			if dict.count > 0 {
+			let user = SGUser(dictionaryRepresentation: dict[0])
+				completion(user, nil)
+			} else {
+				completion(nil, nil)
+			}
 			
 		}
 	}
@@ -386,6 +407,31 @@ class SGAPI : NSObject {
 		}
 	}
 	
+	class func getUserFeatures(username user: String, completion: ([SGFeature]?, NSError?) -> Void ) {
+		// Returns the details for a user
+		let params = ["username" : user]
+		
+		Alamofire.request(.GET, getUserFeaturesPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
+			response in
+			
+			guard response.result.isSuccess else {
+				print("Error: \(response.result.error)")
+				completion(nil, response.result.error)
+				return
+			}
+			
+			let dict = response.result.value as! [ [String: AnyObject] ]
+			var features = [SGFeature]()
+			
+			for f in dict {
+				features.append(SGFeature(dictionaryRepresentation: f))
+			}
+			
+			completion(features, nil)
+			
+		}
+	}
+	
 	class func login(username user: String, password pass: String, completion: (Bool, NSError?) -> Void) {
 		let params = ["username" : user, "password" : pass]
 		Alamofire.request(.POST, loginPath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
@@ -405,6 +451,21 @@ class SGAPI : NSObject {
 		let params = ["username" : following, "visible_to" : follower]
 		
 		Alamofire.request(.POST, followPath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
+			guard response.result.isSuccess else {
+				print("Error: \(response.result.error)")
+				completion(false, response.result.error)
+				return
+			}
+			
+			let success = response.result.error == nil
+			completion(success, nil)
+		}
+	}
+	
+	class func postNewFeature(feature name: String, forUser user: String, completion: (Bool, NSError?) -> Void) {
+		let params = ["username" : user, "feature" : name]
+		
+		Alamofire.request(.POST, addFeaturePath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
 			guard response.result.isSuccess else {
 				print("Error: \(response.result.error)")
 				completion(false, response.result.error)

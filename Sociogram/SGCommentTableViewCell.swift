@@ -27,6 +27,9 @@ class SGCommentTableViewCell: SGTableViewCell {
 		
 		self.comment = comment
 		
+		self.layer.borderColor = SGDesign.colourNavy().CGColor
+		self.layer.borderWidth = 1
+		
 		photo = SGProfileImageView()
 		photo.layer.cornerRadius = 25
 		self.addSubview(photo)

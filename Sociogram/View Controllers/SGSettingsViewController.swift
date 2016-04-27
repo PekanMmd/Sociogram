@@ -24,6 +24,7 @@ class SGSettingsViewController: SGViewController, SGLogoutPossibleViewController
 		self.addConstraintsFormat(visualFormat: "V:[l]-(tabBarHeight)-|", layoutFormat: [])
 		self.addConstraintAlignLeftAndRightEdges(view1: logoutButton, view2: self.view)
 		
+		
     }
 	
 	func logout() {

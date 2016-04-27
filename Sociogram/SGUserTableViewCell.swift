@@ -37,6 +37,8 @@ class SGUserTableViewCell: SGTableViewCell {
 	func setUp() {
 		
 		self.backgroundColor = SGDesign.colourWhite()
+		self.layer.borderColor = SGDesign.colourNavy().CGColor
+		self.layer.borderWidth = 1
 		
 		// Photo
 		photo = SGProfileImageView()

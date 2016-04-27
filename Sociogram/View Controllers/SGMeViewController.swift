@@ -23,7 +23,7 @@ class SGMeViewController: SGProfileViewController {
 		super.viewDidLoad()
 		self.navigationController?.tabBarItem.title = localisedString("Profile")
 		
-		
+		self.title = localisedString("Profile")
 	}
 
 }

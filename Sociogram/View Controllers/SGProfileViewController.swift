@@ -31,6 +31,7 @@ class SGProfileViewController: SGTableViewController {
 		super.viewWillAppear(animated)
 		updateUI()
 		updateUser()
+		getFeatures()
 		getComments()
 	}
 	
@@ -59,7 +60,23 @@ class SGProfileViewController: SGTableViewController {
 		
 	}
 	
+	func getFeatures() {
+		
+		self.showActivityView { (done) in
+			SGAPI.getUserFeatures(username: self.user.username, completion: { (featureList, error) in
+				if featureList != nil {
+					self.user.features = featureList!
+					self.updateUI()
+				} else if error != nil {
+					SGAlertView.show(message: "Couldn't get features for user.")
+				}
+				self.hideActivityView()
+			})
+		}
+	}
+	
 	func getComments() {
+		
 		self.showActivityView { (done) in
 			SGAPI.getUserComments(username: self.user.username, includePrivate: self.isUser) { (comments, error) in
 				if comments != nil {
@@ -78,7 +95,7 @@ class SGProfileViewController: SGTableViewController {
 			
 			let vc = SGOpinionViewController()
 			vc.user = self.user
-			vc.feature = user.features[index]
+			vc.feature = user.listFeaturesByDescendingScores()[index]
 			
 			self.navigationController?.pushViewController(vc, animated: true)
 			
