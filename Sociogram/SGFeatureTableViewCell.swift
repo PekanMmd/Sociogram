@@ -75,7 +75,7 @@ class SGFeatureTableViewCell: SGTableViewCell {
 			
 			self.attributeName.text = feature.attribute.name
 			self.score.text = "\(feature.value * 100)%"
-			self.contributions.text = "\(feature.contributors.count) " + localisedString("Opinions").lowercaseString
+			self.contributions.text = "\(feature.opinions) " + localisedString("Opinions").lowercaseString
 		}
 		
 	}

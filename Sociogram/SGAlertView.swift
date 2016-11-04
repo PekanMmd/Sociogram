@@ -92,19 +92,30 @@ class SGAlertView: UIView {
 	
 	func show() {
 		
+		numberOfVisibileAlerts += 1
+		
 		let views = ["self" : self, "back" : backView]
 		
 		let window = UIApplication.sharedApplication().keyWindow!
-		window.addSubview(backView)
-		backView.addSubview(self)
+		
+		if numberOfVisibileAlerts == 1 {
+			window.addSubview(backView)
+			window.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[back]|", options: [], metrics: nil, views: views))
+			window.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[back]|", options: [], metrics: nil, views: views))
+		}
+		
+		window.addSubview(self)
 		window.addConstraint(NSLayoutConstraint(item: window, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0))
 		window.addConstraint(NSLayoutConstraint(item: window, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
-		window.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[back]|", options: [], metrics: nil, views: views))
-		window.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[back]|", options: [], metrics: nil, views: views))
+		
+		
+		
 		
 	}
 	
 	func dismiss() {
+		
+		numberOfVisibileAlerts -= 1
 		
 		UIView.animateWithDuration(0.25, animations: {
 			
@@ -113,7 +124,9 @@ class SGAlertView: UIView {
 			
 			}, completion: { (Bool) -> Void in
 				self.removeFromSuperview()
-				self.backView.removeFromSuperview()
+				if numberOfVisibileAlerts == 0 {
+					self.backView.removeFromSuperview()
+				}
 		})
 		
 	}

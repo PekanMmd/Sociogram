@@ -13,7 +13,8 @@ class SGProfileViewController: SGTableViewController {
 
 	//MARK: - Properties
 	
-	var user	= SGUser.defaultUser()
+	var user	 = SGUser.defaultUser()
+	var features = [SGFeature]()
 	var comments = [SGComment]()
 	
 	var isUser : Bool {
@@ -29,15 +30,25 @@ class SGProfileViewController: SGTableViewController {
 	
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
-		updateUI()
+		
 		updateUser()
 		getFeatures()
 		getComments()
+		
+		updateUI()
+		
 	}
 	
 	func updateUI() {
 		
 		tableView.reloadData()
+		
+//		guard let visible = tableView.indexPathsForVisibleRows else {
+//			return
+//		}
+//		
+//		tableView.reloadRowsAtIndexPaths(visible, withRowAnimation: UITableViewRowAnimation.None)
+		
 		
 	}
 	
@@ -65,10 +76,11 @@ class SGProfileViewController: SGTableViewController {
 		self.showActivityView { (done) in
 			SGAPI.getUserFeatures(username: self.user.username, completion: { (featureList, error) in
 				if featureList != nil {
-					self.user.features = featureList!
+					self.features = featureList!
 					self.updateUI()
 				} else if error != nil {
-					SGAlertView.show(message: "Couldn't get features for user.")
+					self.features = []
+					SGAlertView.show(message: "Couldn't get features for user \(self.user.username).")
 				}
 				self.hideActivityView()
 			})
@@ -95,7 +107,7 @@ class SGProfileViewController: SGTableViewController {
 			
 			let vc = SGOpinionViewController()
 			vc.user = self.user
-			vc.feature = user.listFeaturesByDescendingScores()[index]
+			vc.feature = self.features.sort { $0.value > $1.value }[index]
 			
 			self.navigationController?.pushViewController(vc, animated: true)
 			
@@ -131,18 +143,18 @@ class SGProfileViewController: SGTableViewController {
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let section = indexPath.section
 		
-		let fCount = user.features.count
+		let fCount = features.count
 		
 		if section == 0 {
 			return profileCell()
 		} else if section == 1 {
 			return headerCell(localisedString("Features"))
 		} else if fCount > 0 {
-			if section - 1 <= user.features.count {
-				return featureCell(user.listFeaturesByDescendingScores()[section - 2])
-			} else if section == user.features.count + 2 {
+			if section - 1 <= features.count {
+				return featureCell(self.features.sort { $0.value > $1.value }[section - 2])
+			} else if section == features.count + 2 {
 				return headerCell(localisedString("Comments"))
-			} else if section == user.features.count + 3 {
+			} else if section == features.count + 3 {
 				if user != currentUser {
 					return postCommentCell()
 				}
@@ -180,7 +192,7 @@ class SGProfileViewController: SGTableViewController {
 	
 	func featureCell(feature: SGFeature?) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("f") as? SGFeatureTableViewCell ?? SGFeatureTableViewCell(feature: feature, reuseIdentifier: "f")
-		if user.features.count > 0 {
+		if features.count > 0 {
 			cell.feature = feature
 			cell.isNoFeaturesCell = false
 		} else {
@@ -203,7 +215,7 @@ class SGProfileViewController: SGTableViewController {
 	
 	override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		let commentCellCount = user == currentUser ? comments.count : comments.count + 1
-		return 3 + commentCellCount + max(user.features.count, 1)
+		return 3 + commentCellCount + max(features.count, 1)
 	}
 	
 	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -232,7 +244,7 @@ class SGProfileViewController: SGTableViewController {
 		
 		switch cellTypeForIndexPath(indexPath) {
 			case .Profile	: return isUser
-			case .Feature	: return (user.features.count > 0)
+			case .Feature	: return (features.count > 0)
 			case .Header	: return false
 			default			: return true
 		}
@@ -246,7 +258,7 @@ class SGProfileViewController: SGTableViewController {
 		switch cellTypeForIndexPath(indexPath) {
 			case .Profile	: if isUser { editProfileAction()  }
 			case .Header	: return
-			case .Feature	: if user.features.count > 0 { featuresActions(section - 2) }
+			case .Feature	: if features.count > 0 { featuresActions(section - 2) }
 			case .Post		: postComment()
 			case .Comment	: viewCommentAction(index: section)
 		}
@@ -262,8 +274,8 @@ class SGProfileViewController: SGTableViewController {
 	
 	func firstCommentIndex() -> Int {
 		
-		if user.features.count > 0 {
-			let n = isUser ? user.features.count + 3 : user.features.count + 4
+		if features.count > 0 {
+			let n = isUser ? features.count + 3 : features.count + 4
 			return n
 		} else {
 			let n = isUser ? 4 : 5
@@ -275,7 +287,7 @@ class SGProfileViewController: SGTableViewController {
 		
 		let section = indexPath.section
 		
-		let fCount = user.features.count
+		let fCount = features.count
 		let isUser = self.user == currentUser
 		
 		if section == 0 {
@@ -283,11 +295,11 @@ class SGProfileViewController: SGTableViewController {
 		} else if section == 1 {
 			return .Header
 		} else if fCount > 0 {
-			if section - 1 <= user.features.count {
+			if section - 1 <= features.count {
 				return.Feature
-			} else if section == user.features.count + 2 {
+			} else if section == features.count + 2 {
 				return .Header
-			} else if section == user.features.count + 3 {
+			} else if section == features.count + 3 {
 				if !isUser {
 					return .Post
 				}

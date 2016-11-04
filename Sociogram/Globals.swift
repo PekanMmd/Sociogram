@@ -8,6 +8,9 @@
 
 import Foundation
 
+//API manager
+let APIManager = SGAPIManager()
+
 // SGUser
 var currentUser		= SGUser.defaultUser()
 var autologin		= false
@@ -33,5 +36,7 @@ func localisedString(key: String) -> String {
 	return NSLocalizedString(key, comment: "")
 }
 
+// Alert view visibility
+var numberOfVisibileAlerts = 0
 
 

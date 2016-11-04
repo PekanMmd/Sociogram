@@ -16,18 +16,20 @@ class SGFeature: NSObject, SGObject {
 	
 	var attribute		= SGAttribute(dictionaryRepresentation: ["name" : "-"])
 	var value			= 0.5
-	var contributors	= [String]()
+	var opinions		= 0
 	
 	var dictionaryRepresentation : [String : AnyObject] {
-		return ["attribute" : ["name" : self.attribute.name], "value" : self.value, "contributors" : self.contributors]
+		return ["attribute" : ["name" : self.attribute.name], "value" : self.value, "opinions" : self.opinions]
 	}
 	
 	required init(dictionaryRepresentation: [String : AnyObject]) {
 		super.init()
 		
-		self.attribute = SGAttribute(dictionaryRepresentation: (dictionaryRepresentation["attribute"] ?? []) as! [String : AnyObject])
-		self.value = (dictionaryRepresentation["value"] ?? 0.5) as! Double
-		self.contributors = (dictionaryRepresentation["contributors"] ?? []) as! [String]
+		let attrName = dictionaryRepresentation["name"] ?? "-"
+		
+		self.attribute	= SGAttribute(dictionaryRepresentation: ["name" : attrName!])
+		self.value		= (dictionaryRepresentation["value"] ?? 0.5) as! Double
+		self.opinions	= (dictionaryRepresentation["opinions"] ?? 0) as! Int
 	}
 
 }

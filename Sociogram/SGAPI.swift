@@ -146,7 +146,7 @@ class SGAPI : NSObject {
 			return
 		}
 		
-		Alamofire.request(.GET, userListPath + name, parameters: nil, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.GET, userListPath + name, parameters: nil, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -171,7 +171,7 @@ class SGAPI : NSObject {
 	class func getUserDetails(username name: String, completion: (SGUser?, NSError?) -> Void ) {
 		// Returns the details for a user
 		
-		Alamofire.request(.GET, userDetailsPath + name, parameters: nil, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.GET, userDetailsPath + name, parameters: nil, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -195,7 +195,7 @@ class SGAPI : NSObject {
 	class func getFollowersForUser(username name: String, completion: ([String]?, NSError?) -> Void ) {
 		// Returns the details for a user
 		
-		Alamofire.request(.GET, followerListPath + name, parameters: nil, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.GET, followerListPath + name, parameters: nil, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -218,7 +218,7 @@ class SGAPI : NSObject {
 	class func getStatsForAttribute(attribute attr: String, completion: (SGAttribute?, NSError?) -> Void ) {
 		// Returns the details for a user
 		
-		Alamofire.request(.GET, attributeStatsPath + attr, parameters: nil, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.GET, attributeStatsPath + attr, parameters: nil, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -238,7 +238,7 @@ class SGAPI : NSObject {
 	class func getAttributeList(completion: ([String]?, NSError?) -> Void ) {
 		// Returns a list of users matching the specified name string
 		
-		Alamofire.request(.GET, attributesListPath).responseJSON {
+		APIManager.request(.GET, attributesListPath).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -256,7 +256,7 @@ class SGAPI : NSObject {
 	class func getFeatureForUser(username name: String, attribute: String, completion: (SGFeature?, NSError?) -> Void ) {
 		// Returns the details for a user
 		
-		Alamofire.request(.GET, userFeaturesStatsPath + name + "/" + attribute).responseJSON {
+		APIManager.request(.GET, userFeaturesStatsPath + name + "/" + attribute).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -278,7 +278,7 @@ class SGAPI : NSObject {
 		
 		let params : [String : AnyObject] = ["att" : attr, "user_from" : from, "user_to" : to, "quantity" : value]
 		
-		Alamofire.request(.POST, featureContributionsPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.POST, featureContributionsPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -287,7 +287,6 @@ class SGAPI : NSObject {
 				return
 			}
 			
-			print(response)
 			let result = response.result.value as! [String : AnyObject]
 			let success = result["success"] as! Bool
 			completion(success, nil)
@@ -300,7 +299,7 @@ class SGAPI : NSObject {
 		
 		let params : [String : AnyObject] = ["username" : username, "name" : firstname + " " + lastname, "password" : password, "email" : email, "gender" : gender, "age" : age]
 		
-		Alamofire.request(.POST, signupPath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
+		APIManager.request(.POST, signupPath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
 			guard response.result.isSuccess else {
 				print("Error: \(response.result.error)")
 				completion(false, response.result.error)
@@ -317,7 +316,7 @@ class SGAPI : NSObject {
 		
 		let params : [String : AnyObject] = ["content": message, "is_private" : true, "recipient" : to, "author" : currentUser.username, "date" : SGDesign.dateFormatter().stringFromDate(NSDate(timeIntervalSinceNow: 0)), "agree" : 0, "disagree" : 0]
 		
-		Alamofire.request(.POST, postCommentPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.POST, postCommentPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -339,7 +338,7 @@ class SGAPI : NSObject {
 		let params : [String : AnyObject] = ["user" : user]
 		let path = priv ? privatePostsToUserPath : publicPostsToUserPath
 		
-		Alamofire.request(.POST, path, parameters: params, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.POST, path, parameters: params, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -365,7 +364,7 @@ class SGAPI : NSObject {
 		
 		let params : [String : AnyObject] = ["id" : id, "private" : priv]
 		
-		Alamofire.request(.PUT, updatePostPrivacyPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.PUT, updatePostPrivacyPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -385,7 +384,7 @@ class SGAPI : NSObject {
 	class func getUserTimelineComments(username user: String, completion: ([SGComment]?, NSError?) -> Void) {
 		let params : [String : AnyObject] = ["user" : user]
 		
-		Alamofire.request(.POST, timelinePath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.POST, timelinePath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -393,6 +392,9 @@ class SGAPI : NSObject {
 				completion(nil, response.result.error)
 				return
 			}
+			
+			completion(nil, response.result.error)
+			return
 			
 			let dict = response.result.value as! [ [String: AnyObject] ]
 			var comments = [SGComment]()
@@ -411,7 +413,7 @@ class SGAPI : NSObject {
 		// Returns the details for a user
 		let params = ["username" : user]
 		
-		Alamofire.request(.GET, getUserFeaturesPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.POST, getUserFeaturesPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -420,7 +422,11 @@ class SGAPI : NSObject {
 				return
 			}
 			
+			print(response.result.value)
 			let dict = response.result.value as! [ [String: AnyObject] ]
+			
+			print(dict)
+			
 			var features = [SGFeature]()
 			
 			for f in dict {
@@ -434,7 +440,7 @@ class SGAPI : NSObject {
 	
 	class func login(username user: String, password pass: String, completion: (Bool, NSError?) -> Void) {
 		let params = ["username" : user, "password" : pass]
-		Alamofire.request(.POST, loginPath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
+		APIManager.request(.POST, loginPath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
 			guard response.result.isSuccess else {
 				print("Error: \(response.result.error)")
 				completion(false, response.result.error)
@@ -450,7 +456,7 @@ class SGAPI : NSObject {
 	class func follow(follower: String, following: String, completion: (Bool, NSError?) -> Void) {
 		let params = ["username" : following, "visible_to" : follower]
 		
-		Alamofire.request(.POST, followPath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
+		APIManager.request(.POST, followPath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
 			guard response.result.isSuccess else {
 				print("Error: \(response.result.error)")
 				completion(false, response.result.error)
@@ -465,7 +471,7 @@ class SGAPI : NSObject {
 	class func postNewFeature(feature name: String, forUser user: String, completion: (Bool, NSError?) -> Void) {
 		let params = ["username" : user, "feature" : name]
 		
-		Alamofire.request(.POST, addFeaturePath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
+		APIManager.request(.POST, addFeaturePath, parameters: params, encoding: .JSON, headers: headers).responseJSON { response in
 			guard response.result.isSuccess else {
 				print("Error: \(response.result.error)")
 				completion(false, response.result.error)
@@ -480,7 +486,7 @@ class SGAPI : NSObject {
 	class func getUserPhoto(username user: String, completion: (UIImage?, NSError?) -> Void) {
 		let params : [String : AnyObject] = ["username" : user]
 		
-		Alamofire.request(.GET, photoPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.GET, photoPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {
@@ -502,7 +508,7 @@ class SGAPI : NSObject {
 //		let imagedata = UIImagePNGRepresentation(photo)!.byte
 		let params : [String : AnyObject] = ["username" : user]
 		
-		Alamofire.request(.POST, photoPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
+		APIManager.request(.POST, photoPath, parameters: params, encoding: .JSON, headers: nil).responseJSON {
 			response in
 			
 			guard response.result.isSuccess else {

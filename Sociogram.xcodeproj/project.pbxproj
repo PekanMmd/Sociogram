@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2015B111CFF2D7D0036F601 /* SGAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2015B101CFF2D7D0036F601 /* SGAPIManager.swift */; };
 		B208D4A91CCC59B9008AAAA0 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B22939871C8DD34000EE248E /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B22937E71C8DD05400EE248E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22937E61C8DD05400EE248E /* AppDelegate.swift */; };
 		B22937E91C8DD05400EE248E /* SGLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22937E81C8DD05400EE248E /* SGLoginViewController.swift */; };
@@ -167,6 +168,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B2015B101CFF2D7D0036F601 /* SGAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGAPIManager.swift; sourceTree = "<group>"; };
 		B22937E31C8DD05400EE248E /* Sociogram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sociogram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22937E61C8DD05400EE248E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B22937E81C8DD05400EE248E /* SGLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SGLoginViewController.swift; path = ../SGLoginViewController.swift; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 			isa = PBXGroup;
 			children = (
 				B22937F81C8DD06D00EE248E /* SGAPI.swift */,
+				B2015B101CFF2D7D0036F601 /* SGAPIManager.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -496,8 +499,8 @@
 				B22BC6431CC9592300A3D4D3 /* SGTabBarController.swift */,
 				B22BC6491CC9627300A3D4D3 /* SGTimelineViewController.swift */,
 				B2EF85E51CCFEE51008399DB /* SGViewCommentViewController.swift */,
-				B2A219461CA70237006E8DB5 /* Abstract */,
 				B2EF85E71CCFEEAA008399DB /* SGListFeaturesViewController.swift */,
+				B2A219461CA70237006E8DB5 /* Abstract */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 				TargetAttributes = {
 					B22937E21C8DD05400EE248E = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = PL9D4W4S2M;
 					};
 					B229399B1C8DD50E00EE248E = {
 						CreatedOnToolsVersion = 7.2;
@@ -728,6 +732,7 @@
 				B22939441C8DD34000EE248E /* Download.swift in Sources */,
 				B22937E71C8DD05400EE248E /* AppDelegate.swift in Sources */,
 				B22937F91C8DD06D00EE248E /* SGAPI.swift in Sources */,
+				B2015B111CFF2D7D0036F601 /* SGAPIManager.swift in Sources */,
 				B22BC6461CC9608800A3D4D3 /* SGSearchViewController.swift in Sources */,
 				B277CFCE1CC6A14A0074C33D /* SGTableViewController.swift in Sources */,
 				B229394F1C8DD34000EE248E /* Result.swift in Sources */,
@@ -886,10 +891,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Sociogram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = UCL.Sociogram;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -897,10 +905,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Sociogram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = UCL.Sociogram;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
